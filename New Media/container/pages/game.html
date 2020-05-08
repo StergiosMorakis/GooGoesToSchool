@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>New Media Lab</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="../styles/style.css" >
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	</head>
+	<body  onload = "followMouse();">
+		<div class="curtain">
+			<div id="ball"></div>
+			<div id="lang-selector"></div>
+			<div class="container-fluid main">
+				<div class="row">
+					<div class="col-8">
+						<div class="highlight"></div>
+						<div class="row_indicator"></div>
+						<div class="board-bg">
+							<div class="board">
+							</div>
+						</div>
+						<div id='ball-area'>
+							<div class="container available-options">
+								<div class="row mt-4">
+									<div class=" col-md-2 col-xs-4 mt-3">
+										<div class="option red-option"></div>
+									</div>
+									<div class=" col-md-2 col-xs-4 mt-3">
+										<div class="option orange-option"></div>
+									</div>
+									<div class=" col-md-2 col-xs-4 mt-3">
+										<div class="option yellow-option"></div>
+									</div>
+									<div class=" col-md-2 col-xs-4 mt-3">
+										<div class="option green-option"></div>
+									</div>
+									<div class=" col-md-2 col-xs-4 mt-3">
+										<div class="option blue-option"></div>
+									</div>
+									<div class=" col-md-2 col-xs-4 mt-3">
+										<div class="option purple-option"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="robo-screen">
+							<div class="robo-container">
+								<div class="robo robo-hover">
+									<div class="robo-eyes">
+										<div class="left-eyeball eyeball"></div>
+										<div class="right-eyeball eyeball"></div>
+									</div>
+								</div>
+							</div>
+							<div class="text-box"><p id='text-area'>placeholder<p></div>
+						</div>
+						<div id='button-area'>
+							<div class="button-area">
+								<div id="positive" class="dialogue-btn btn-left">
+									<span class="away">Yes</span>
+									<span class="over">That is correct!</span>
+								</div>
+								<div id="negative" class="dialogue-btn btn-right">
+									<span class="away">No</span>
+									<span class="over">You are wrong!</span>
+								</div>
+							</div>
+						</div>
+						<div id='next-area'>
+							<div class="next-area">
+								<div id="dialogue-next" class='btn btn-success'>Next &raquo;</div>
+							</div>
+						</div>
+						<div id='numberinput-area'>
+							<div class="numberinput-area">
+								<div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+								<input type="number" id="number" disabled value="1" />
+								<div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+							</div>
+							<div class="numberinput-btn">OK<div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<footer>
+		<script src="../../container/files/lang.js"></script>
+		<script src="../../container/files/main.js"></script>
+	</footer>
+</html>
