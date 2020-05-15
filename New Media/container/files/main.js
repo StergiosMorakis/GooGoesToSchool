@@ -427,7 +427,7 @@
 								})
 							}
 							else {
-								$('#text-area').text(script[lang]['text_17'][getRandomInt(script[lang]['text_17'].length)].replace('#COL#', (size - curr_square.id.split('_')[1] % 8 - 1)))
+								$('#text-area').text(script[lang]['text_17'][getRandomInt(script[lang]['text_17'].length)].replace('#COL#', (size - curr_square.id.split('_')[1] % 8 - 1)+1))
 								$('#next-area').fadeIn(900)
 								$('#dialogue-next').click(function() {
 									$('#dialogue-next').unbind()
