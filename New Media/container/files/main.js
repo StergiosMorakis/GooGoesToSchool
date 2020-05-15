@@ -69,7 +69,7 @@
 				cursory = cursory + 50 > $( document ).height() ? $( document ).height() - 50 : cursory;
 				ball.css("left", cursorx + 'px');
 				ball.css("top", cursory + 'px');
-			};
+			}; 
 			function animateFace(expression){
 				switch(expression) {
 					case 0:
@@ -110,99 +110,6 @@
 						break
 				}
 			}
-			function getImage(i) {
-				images = {
-					0: {
-						name: 'flag',
-						desc: {
-							'english': 'our flag',
-							'dutch': ''
-						},
-						img: [
-							[2,2,2,2,2,2,2,2],
-							[2,1,1,1,1,1,1,2],
-							[2,1,1,1,1,1,1,2],
-							[2,0,0,0,0,0,0,2],
-							[2,0,0,0,0,0,0,2],
-							[2,5,5,5,5,5,5,2],
-							[2,5,5,5,5,5,5,2],
-							[2,2,2,2,2,2,2,2]
-						]
-					},
-					1: {
-						name: 'fruit',
-						desc: {
-							'english': 'fruits',
-							'dutch': ''
-						},
-						img: [
-							[0,0,0,0,4,4,0,0],
-							[0,0,0,0,0,3,0,0],
-							[0,0,0,0,0,3,3,0],
-							[0,0,0,0,0,3,4,4],
-							[3,0,0,0,3,1,1,0],
-							[3,3,3,3,1,1,1,1],
-							[0,3,3,3,1,1,1,1],
-							[0,0,0,0,0,1,1,0]
-						]
-					},
-					2: {
-						name: 'flower',
-						desc: {
-							'english': 'flowers',
-							'dutch': ''
-						},
-						img: [
-							[0,0,0,0,0,5,6,5],
-							[5,6,5,0,0,6,3,6],
-							[6,3,6,0,0,5,6,5],
-							[5,6,5,2,1,2,4,0],
-							[0,4,0,1,3,1,4,0],
-							[0,4,0,2,1,2,0,0],
-							[0,0,0,0,4,0,0,0],
-							[0,0,0,0,4,0,0,0]
-						]
-					},
-					3: {
-						name: 'lion',
-						desc: {
-							'english': 'a lion',
-							'dutch': ''
-						},
-						img: [
-							[0,1,1,1,1,1,1,0],
-							[1,3,3,1,1,3,3,1],
-							[1,3,3,3,3,3,3,1],
-							[1,1,5,3,3,5,1,1],
-							[1,1,3,3,3,3,1,1],
-							[1,1,3,2,2,3,1,1],
-							[0,1,1,3,3,1,1,0],
-							[0,0,1,1,1,1,0,0]
-						]
-					},
-					4: {
-						name: 'rainbow',
-						desc: {
-							'english': 'a rainbow',
-							'dutch': ''
-						},
-						img: [
-							[0,0,0,1,1,0,0,0],
-							[0,1,1,2,2,1,1,0],
-							[1,2,2,3,3,2,2,1],
-							[2,3,3,4,4,3,3,2],
-							[3,4,4,5,5,4,4,3],
-							[4,5,5,6,6,5,5,4],
-							[5,6,6,0,0,6,6,5],
-							[6,0,0,0,0,0,0,6]
-						]
-					}
-				}
-				return images[i]
-			}
-			function getDefaultLang(i) {
-
-			}
 			let searchParams = new URLSearchParams(window.location.search)
 			var img_id = searchParams.has('mode') ?  searchParams.get('mode') : 0
 			var lvl = searchParams.has('level') ?  searchParams.get('level') : 0
@@ -210,9 +117,14 @@
 			if (searchParams.has('lang') && searchParams.get('lang') != 0) {
 				$('#lang-selector').remove()
 			}
+			$('#positive .away').text(script[lang]['positive_away']);
+			$('#positive .over').text(script[lang]['positive_over']);
+			$('#negative .away').text(script[lang]['positive_away']);
+			$('#negative .over').text(script[lang]['negative_over']);
+			$('#dialogue-next').text(script[lang]['dialogue_next']);
 			var picked = false;
 			var locked = false
-			var target_img = getImage(img_id).img
+			var target_img = images[img_id].img
 			var board_state = [
 				[0,0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,0,0],
@@ -255,32 +167,11 @@
 				}
 				return noise
 			}
-			function numberToPrint(number) {
-				if (lang == 'en') {
-					switch(number){
-						case 0:
-							return ((number + 1) + 'st')
-						case 1:
-							return ((number + 1) + 'nd')
-						case 2:
-							return ((number + 1) + 'rd')
-						default:
-							return ((number + 1) + 'th')
-					}
-				}
-				else {
-					switch(number){
-						case 1:
-							return ((number + 1) + 'ste')
-						case 8:
-							return ((number + 1) + 'ste')
-						default:
-							return ((number + 1) + 'de')
-					}
-				}
-			}
 			function getKeyByValue(object, value) {
 				return Object.keys(object).find(key => object[key] === value);
+			}
+			function getRandomInt(max) {
+				return Math.floor(Math.random() * Math.floor(max));
 			}
 			function getRandomNumber(min, max) {
 			    return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -315,35 +206,49 @@
 			}
 			early_game()
 			function early_game() {
-				$('#text-area').text(script[lang][0][0])
+				$('#text-area').text(script[lang]['text_0'][getRandomInt(script[lang]['text_0'].length)])
 				$('#next-area').fadeIn(900)
 				$('#dialogue-next').click(function() {
 					$('#next-area').fadeOut(400, function() {
 						$('#dialogue-next').unbind()
-							mid_game()
+						let req_row = size - getRandomInt(8) - 1
+						highlightRow(req_row)
+						$('#next-area').fadeOut(400, function () {
+							$('#text-area').text(script[lang]['text_21'][getRandomInt(script[lang]['text_21'].length)])
+							$('#next-area').fadeIn(900)
+							$('#dialogue-next').click(function() {
+								$('#next-area').fadeOut(400, function() {
+									$('#dialogue-next').unbind()
+									mid_game(req_row)
+								})						
+							})
 						})
-				});
+					})
+				})
 			}
-			function mid_game() {
+			function mid_game(init_row=null) {
+				var req_row = init_row
 				$('#next-area').fadeOut(400, function () {
-					var req_row = size - getRandomNumber(0, 7) - 1
-					while(rowOccupied(req_row)) {
-						req_row = size - getRandomNumber(0, 7) - 1
+					if (req_row==null) {
+						req_row = size - getRandomInt(8) - 1
+						while(rowOccupied(size-req_row-1)) {
+							req_row = size - getRandomInt(8) - 1
+						}
+						highlightRow(req_row)
 					}
 					var noise = getNoise(lvl, req_row)
-					highlightRow(req_row)
-					$('#text-area').text(script[lang][1][0] + numberToPrint(req_row + noise) + script[lang][1][1])
+					$('#text-area').text(script[lang]['text_1'][getRandomInt(script[lang]['text_1'].length)].replace('#ROW#', req_row + noise + 1))
 					$('#button-area').fadeIn(900)
 					if(noise!=0) {
 						$('#positive').click( function() {
 							$('#button-area').fadeOut(400, function () {
-								$('#text-area').text(script[lang][2][0])
+								$('#text-area').text(script[lang]['text_2'][getRandomInt(script[lang]['text_2'].length)])
 								trialRow(req_row)
 							})
 						})
 						$('#negative').click( function() {
 							$('#button-area').fadeOut(400, function () {
-								$('#text-area').text(script[lang][3][0])
+								$('#text-area').text(script[lang]['text_3'][getRandomInt(script[lang]['text_3'].length)])
 								trialRow(req_row)
 							})
 						})
@@ -352,7 +257,7 @@
 						$('#positive').click( function() {
 							$('#button-area').fadeOut(400, function () {
 								animateFace(1)
-								$('#text-area').text(script[lang][4][0] + numberToPrint(req_row) + script[lang][4][1])
+								$('#text-area').text(script[lang]['text_4'][getRandomInt(script[lang]['text_4'].length)].replace('#ROW#', req_row+1))
 								$('#next-area').fadeIn(900)
 								$('#dialogue-next').click(function() {
 									animateFace(0)
@@ -365,7 +270,7 @@
 						})
 						$('#negative').click( function() {
 							$('#button-area').fadeOut(400, function () {
-								$('#text-area').text(script[lang][5][0] + numberToPrint(req_row) + script[lang][5][1])
+								$('#text-area').text(script[lang]['text_5'][getRandomInt(script[lang]['text_5'].length)].replace('#ROW#', req_row+1))
 								$('#next-area').fadeIn(900)
 								$('#dialogue-next').click(function() {
 									$('#next-area').fadeOut(400, function () {
@@ -381,17 +286,19 @@
 			function end_game() {
 				$('#next-area').fadeOut(400, function () {
 					animateFace(1)
-					$('#text-area').text(script[lang][6][0] + getImage(img_id).desc[lang] + script[lang][6][1])
+					$(".board-bg").addClass('board-shine')
+					$('#text-area').text(script[lang]['text_6'][getRandomInt(script[lang]['text_6'].length)].replace('#DESC#', images[img_id].desc[lang]))
 					$('#next-area').fadeIn(900)
 					$('#dialogue-next').click(function() {
 						animateFace(0)
 						$('#dialogue-next').unbind()
 						$('#next-area').fadeOut(400, function () {
-							$('#text-area').text(script[lang][7][0])
+							$('#text-area').text(script[lang]['text_7'][getRandomInt(script[lang]['text_7'].length)])
 							$('#next-area').fadeIn(900)
 							$('#dialogue-next').click(function() {
 								$('#dialogue-next').unbind()
 								$('.curtain').fadeOut(2000, function() {
+									$(".board-bg").removeClass('board-shine')
 									$('#ball-area').fadeIn(900)
 									$('#next-area').fadeOut(400)
 									$('.curtain').fadeIn(1500)
@@ -404,13 +311,13 @@
 			}
 			function insideRow(req_row){
 				colours = getColours()
-				var req_col = getRandomNumber(0, 7)
-				while(squareOccupiedOrWhite(req_row, req_col)) {
-					req_col = getRandomNumber(0, 7)
+				var req_col = getRandomInt(8)
+				while(squareOccupiedOrWhite(size-req_row-1, req_col)) {
+					req_col = getRandomInt(8)
 				}
-				var req_colour = target_img[req_row][req_col]
+				var req_colour = target_img[size-req_row-1][req_col]
 				$('.highlight').fadeOut(400)
-				$('#text-area').text(script[lang][8][0] + colours[req_colour] + script[lang][8][1] + numberToPrint(req_col) + script[lang][8][2] + numberToPrint(req_row)  + script[lang][8][3])
+				$('#text-area').text(script[lang]['text_8'][getRandomInt(script[lang]['text_8'].length)].replace('#COLOUR#', colours[req_colour]).replace('#ROW#', req_row+1).replace('#COL#', req_col+1))
 				$('#ball-area').fadeIn(900)
 				trialColour(req_row, req_col, req_colour)
 			}
@@ -422,7 +329,7 @@
 					}
 					if (t_counter==2) {
 						$('#numberinput-area').fadeOut(400, function () {
-							$('#text-area').text(script[lang][9][0] + numberToPrint(req_row) + script[lang][9][1])
+							$('#text-area').text(script[lang]['text_9'][getRandomInt(script[lang]['text_9'].length)].replace('#ROW#', req_row+1))
 							$('#next-area').fadeIn(900)
 							$('#dialogue-next').click(function() {
 								$('#next-area').fadeOut(400, function () {
@@ -434,7 +341,7 @@
 						})
 					}
 					else if (($('#number').val()-1)==req_row) {
-						$('#text-area').text(script[lang][10][0] + numberToPrint(req_row) + script[lang][10][1])
+						$('#text-area').text(script[lang]['text_10'][getRandomInt(script[lang]['text_10'].length)].replace('#ROW#', req_row+1))
 						animateFace(2)
 						$('#numberinput-area').fadeOut(400, function () {
 							$('#next-area').fadeIn(900)
@@ -450,14 +357,14 @@
 					} else if ( ($('#number').val()-1) != req_row || t_counter < 2) {
 						$('#numberinput-area').fadeOut(400, function () {
 						t_counter = t_counter + 1
-						$('#text-area').text(script[lang][11][0])
+							$('#text-area').text(script[lang]['text_11'][getRandomInt(script[lang]['text_11'].length)])
 							$('#next-area').fadeIn(900)
 							animateFace(2)
 							$('#dialogue-next').click(function() {
 								animateFace(0)
 								$('#dialogue-next').unbind()
 								$('#next-area').fadeOut(400, function () {
-									$('#text-area').text(script[lang][12][0])
+									$('#text-area').text(script[lang]['text_12'][getRandomInt(script[lang]['text_12'].length)])
 									$('#numberinput-area').fadeIn(900)
 								});
 							});
@@ -477,7 +384,7 @@
 							picked = false
 							locked = true
 							if(req_row != parseInt(curr_square.id.split('_')[1]/8)) {
-								$('#text-area').text(script[lang][13][0] + numberToPrint(req_row) + script[lang][13][1] + numberToPrint(parseInt(curr_square.id.split('_')[1]/8)) + script[lang][13][2])
+								$('#text-area').text(script[lang]['text_13'][getRandomInt(script[lang]['text_13'].length)].replace('#ROW1#', req_row+1).replace('#ROW2#', parseInt(curr_square.id.split('_')[1]/8) +1))
 								animateFace(2)
 								row_indicator.fadeIn(2500, function() {
 									row_indicator.fadeOut(2500)
@@ -488,23 +395,23 @@
 									$('#dialogue-next').unbind()
 									$('#next-area').fadeOut(400, function() {
 										popColour($('#'+curr_square.id))
-										$('#text-area').text(script[lang][14][0] + colours[req_colour] + script[lang][14][1] + numberToPrint(req_col) + script[lang][14][2] + numberToPrint(req_row) + script[lang][14][3])
+										$('#text-area').text(script[lang]['text_8'][getRandomInt(script[lang]['text_8'].length)].replace('#COLOUR#', colours[req_colour]).replace('#ROW#', req_row+1).replace('#COL#', req_col+1))
 										locked = false
 									})
 								})
 							}
 							else if(req_col == ( size - curr_square.id.split('_')[1] % 8 -1)) {
 								$('#ball-area').fadeOut(400, function() {
-									$('#text-area').text(script[lang][15][0])
+									$('#text-area').text(script[lang]['text_15'][getRandomInt(script[lang]['text_15'].length)])
 									animateFace(1)
-									board_state[req_row][req_col] =  target_img[req_row][req_col]
+									board_state[size-req_row-1][req_col] =  target_img[size-req_row-1][req_col]
 									$('#next-area').fadeIn(900)
 									$('#dialogue-next').click(function() {
 										animateFace(0)
 										getHandlers().map(x => x.unbind())
 										$('#next-area').fadeOut(400, function () {
 											if (!imageFilled()) {
-												$('#text-area').text(script[lang][16][0])
+												$('#text-area').text(script[lang]['text_16'][getRandomInt(script[lang]['text_16'].length)])
 												$('#next-area').fadeIn(900)
 												$('#dialogue-next').click(function() {
 													$('#dialogue-next').unbind();
@@ -520,8 +427,7 @@
 								})
 							}
 							else {
-								$('#text-area').text(script[lang][17][0]
-									+ numberToPrint( size - curr_square.id.split('_')[1] % 8 - 1) + script[lang][17][1])
+								$('#text-area').text(script[lang]['text_17'][getRandomInt(script[lang]['text_17'].length)].replace('#COL#', (size - curr_square.id.split('_')[1] % 8 - 1)))
 								$('#next-area').fadeIn(900)
 								$('#dialogue-next').click(function() {
 									$('#dialogue-next').unbind()
@@ -535,7 +441,7 @@
 											})
 										})
 										popColour($('#'+curr_square.id))
-										$('#text-area').text(script[lang][14][0] + colours[req_colour] + script[lang][14][1] + numberToPrint(req_col) + script[lang][14][2] + numberToPrint(req_row) + script[lang][14][3])
+										$('#text-area').text(script[lang]['text_8'][getRandomInt(script[lang]['text_8'].length)].replace('#COLOUR#', colours[req_colour]).replace('#ROW#', req_row+1).replace('#COL#', req_col+1))
 										locked = false
 									})
 								});
@@ -554,14 +460,14 @@
 						$('#ball').addClass(this.className.split(/\s+/)[1])
 						picked = true
 						if(req_colour != chosen_colour) {
-							$('#text-area').text(script[lang][18][0] + colours[req_colour] + script[lang][18][1])
+							$('#text-area').text(script[lang]['text_18'][getRandomInt(script[lang]['text_18'].length)].replace('#COLOUR#', colours[req_colour]))
 							$('#ball').fadeOut(400, function() {
 								picked = false
 								locked = false
 							})
 						}
-						else {
-							$('#text-area').text(script[lang][19][0] + colours[req_colour] + script[lang][19][1] + numberToPrint(req_col) + script[lang][19][2] + numberToPrint(req_row) + script[lang][19][3])
+						else {	
+							$('#text-area').text(script[lang]['text_19'][getRandomInt(script[lang]['text_19'].length)].replace('#COLOUR#', colours[req_colour]).replace('#ROW#', req_row+1).replace('#COL#', req_col+1))
 							locked = true
 							trialCol(req_row, req_col, req_colour, picked)
 						}
@@ -573,7 +479,7 @@
 				$('.square').each(function(){
 					popColour($(this))
 				})
-				$('#text-area').text(script[lang][20][0])
+				$('#text-area').text(script[lang]['text_20'][getRandomInt(script[lang]['text_20'].length)])
 				$('.option').click(function() {
 					$('#ball').removeClass();
 					$('#ball').css('display', 'block');
